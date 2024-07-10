@@ -1,4 +1,5 @@
 import { src, dest, watch, series } from 'gulp'
+import gulpPlumber from 'gulp-plumber'
 import * as dartSass from 'sass'
 import gulpSass from 'gulp-sass'
 import terser from 'gulp-terser'
@@ -12,6 +13,7 @@ const paths = {
 
 export function css( done ) {
     src(paths.scss, {sourcemaps: true})
+    .pipe(gulpPlumber())
         .pipe( sass({
             outputStyle: 'compressed'
         }).on('error', sass.logError) )

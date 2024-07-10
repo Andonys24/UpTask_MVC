@@ -8,11 +8,15 @@ class LoginController
 {
     public static function login(Router $router)
     {
-        echo 'Desde login';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Codigo POST
         }
+
+        // Renderizar la vista
+        $router->render('auth/login', [
+            'titulo' => 'Iniciar Sesion'
+        ]);
     }
 
     public static function logout()
@@ -22,11 +26,15 @@ class LoginController
 
     public static function crear(Router $router)
     {
-        echo 'Desde Crear';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Codigo POST
         }
+
+        // Renderizar la vista
+        $router->render('auth/crear', [
+            'titulo' => 'Crea Tu Cuenta en UpTask'
+        ]);
     }
 
     public static function olvide(Router $router)

@@ -14,5 +14,8 @@
     "gulp-sass": "^5.1.0",
     "gulp-terser": "^2.1.0",
     "sass": "^1.75.0"
+  },
+  "dependencies": {
+    "gulp-plumber": "^1.2.1"
   }
 }
