@@ -39,29 +39,39 @@ class LoginController
 
     public static function olvide(Router $router)
     {
-        echo 'Desde Olvide mi Password';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Codigo POST
         }
+
+        $router->render('auth/olvide', [
+            'titulo' => 'Olvide mi Password'
+        ]);
     }
 
-    public static function restablercer(Router $router)
+    public static function restablecer(Router $router)
     {
-        echo 'Desde Restablecer password';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Codigo POST
         }
+
+        $router->render('auth/restablecer', [
+            'titulo' => 'Restablecer Password'
+        ]);
     }
 
-    public static function mensaje()
+    public static function mensaje(Router $router)
     {
-        echo 'Desde mensaje';
+        $router->render('auth/mensaje', [
+            'titulo' => 'Cuenta creda Exitosamente'
+        ]);
     }
 
-    public static function confirmar()
+    public static function confirmar(Router $router)
     {
-        echo 'Desde Confirmar';
+        $router->render('auth/confirmar', [
+            'titulo' => 'Confirma tu cuenta UpTask'
+        ]);
     }
 }
