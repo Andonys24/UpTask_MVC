@@ -2,6 +2,8 @@
 
 namespace Model;
 
+use Classes\Email;
+
 class Usuario extends ActiveRecord
 {
     protected static $tabla = 'usuarios';
@@ -63,6 +65,42 @@ class Usuario extends ActiveRecord
         }
         return self::$alertas;
     }
+
+    public function validarEmail()
+    {
+        switch (true) {
+            case empty($this->email):
+                self::$alertas['error'][] = 'El Email es Obligatorio.';
+                break;
+            case !filter_var($this->email, FILTER_VALIDATE_EMAIL):
+                self::$alertas['error'][] = 'El Email no es Valido.';
+                break;
+        }
+        return self::$alertas;
+    }
+
+    public function validarPassword()
+    {
+        switch (true) {
+            case empty($this->password):
+                self::$alertas['error'][] = 'El Password es Obligatorio.';
+                break;
+            case strlen($this->password) < 8:
+                self::$alertas['error'][] = 'El Password debe tener al menos 8 caracteres.';
+                break;
+            case !preg_match('/[a-z]/', $this->password) || !preg_match('/[A-Z]/', $this->password):
+                self::$alertas['error'][] = 'La Contraseña debe contener al menos una letra mayúscula y una letra minúscula.';
+                break;
+            case !preg_match('/\d/', $this->password):
+                self::$alertas['error'][] = 'La Contraseña debe contener al menos un número.';
+                break;
+            case !preg_match('/[^a-zA-Z\d\s]/', $this->password):
+                self::$alertas['error'][] = 'La Contraseña debe contener al menos un carácter especial.';
+                break;
+        }
+        return self::$alertas;
+    }
+    
     // Hashea el password
     public function hashPassword()
     {
