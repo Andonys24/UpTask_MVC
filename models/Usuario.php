@@ -2,8 +2,6 @@
 
 namespace Model;
 
-use Classes\Email;
-
 class Usuario extends ActiveRecord
 {
     protected static $tabla = 'usuarios';
@@ -29,7 +27,8 @@ class Usuario extends ActiveRecord
     }
 
     // Validar el login de usuarios
-    public function validarLogin(){
+    public function validarLogin()
+    {
         switch (true) {
             case empty($this->email):
                 self::$alertas['error'][] = 'El Email es Obligatorio.';
@@ -116,7 +115,7 @@ class Usuario extends ActiveRecord
         }
         return self::$alertas;
     }
-    
+
     // Hashea el password
     public function hashPassword()
     {
