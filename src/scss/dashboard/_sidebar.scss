@@ -17,11 +17,19 @@
 		a {
 			color: v.$blanco;
 			display: block;
-			text-align: center;
+			text-align: left;
 			margin-bottom: 1.5rem;
 			padding: 0.7rem;
 			transition-property: background-color;
 			transition-duration: 300ms;
+
+			@include m.telefono {
+				text-align: center;
+			}
+
+			@include m.tablet {
+				text-align: left;
+			}
 
 			&:hover,
 			&.activo {
