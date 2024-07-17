@@ -26,11 +26,19 @@
 			display: block;
 		}
 
+		input[type="text"] {
+			border: 1px solid v.$gris;
+		}
+
 		.opciones {
 			display: flex;
 			justify-content: space-between;
 			.submit-nueva-tarea {
 				@include m.boton(v.$indigo, v.$blanco);
+
+				&.ocultar {
+					visibility: hidden;
+				}
 			}
 
 			.cerrar-modal {
