@@ -2,9 +2,75 @@
 @use "base/mixins" as m;
 
 .contenedor-nueva-tarea {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
+
 	.agregar-tarea {
-        @include m.boton(v.$cyan, v.$blanco)
+		@include m.boton(v.$cyan, v.$blanco);
+	}
+}
+
+.listado-tareas {
+	list-style: none;
+	padding: 0;
+	margin-top: 3rem;
+
+	.no-tareas {
+		text-align: center;
+	}
+}
+
+.tarea {
+	padding: 0.5rem 2rem;
+	border-bottom: 2px solid darken(v.$gris, 5%);
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	&:last-of-type {
+		border: none;
+	}
+
+	p {
+		font-size: 1.6rem;
+	}
+	.opciones {
+		display: flex;
+		gap: 1rem;
+		button {
+			border: none;
+			font-size: 1.4rem;
+			padding: 0.6rem 1rem;
+			text-transform: uppercase;
+			font-weight: 700;
+			border-radius: 1rem;
+			color: v.$blanco;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+
+			&:hover {
+				cursor: pointer;
+                transform: scale(1.1);
+			}
+		}
+		.completa {
+			background-color: v.$azul;
+			&:hover {
+				background-color: darken(v.$azul, 10%);
+			}
+		}
+
+		.pendiente {
+			background-color: v.$naranja;
+			&:hover {
+				background-color: darken(v.$naranja, 10%);
+			}
+		}
+
+		.eliminar-tareas {
+			background-color: v.$rojo;
+			&:hover {
+				background-color: darken(v.$rojo, 10%);
+			}
+		}
 	}
 }

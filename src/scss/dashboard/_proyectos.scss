@@ -16,7 +16,7 @@
 		@include m.grid(2, 2rem);
 	}
 	@include m.desktop {
-		@include m.grid(3, 2rem);
+		@include m.grid(3, 2.5rem);
 	}
 
 	.proyecto {
@@ -27,12 +27,12 @@
 		padding: 2rem;
 		line-height: 2;
 		border-radius: 0.5rem;
-        justify-content: center;
-		transition-property: background-color;
-		transition-duration: 300ms;
+		justify-content: center;
+		transition: background-color 0.3s ease, transform 0.3s ease;
 
 		&:hover {
 			background-color: darken(v.$indigo, 5%);
+			transform: scale(1.1);
 		}
 
 		a {

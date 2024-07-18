@@ -8,11 +8,18 @@ use MVC\Router;
 
 class TareaController
 {
-    public static function index(Router $router)
+    public static function index()
     {
-        $router->render('tareas/index', [
-            'titulo' => 'Tareas'
-        ]);
+        $proyectoId = $_GET['id'];
+        if (!$proyectoId) header('Location: /dashboard');
+
+        $proyecto = Proyecto::where('url', $proyectoId);
+
+        session_start();
+        if (!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) header('Location: /404');
+        $tareas = Tarea::belogsTo('proyectoId', $proyecto->id);
+
+        echo json_encode(['tareas' => $tareas]);
     }
 
     public static function crear()
@@ -43,7 +50,8 @@ class TareaController
             $respuesta = [
                 'tipo' => 'exito',
                 'id' => $resultado['id'],
-                'mensaje' => 'Tarea Creada Correctamente'
+                'mensaje' => 'Tarea Creada Correctamente',
+                'proyectoId' => $proyecto->id
             ];
             echo json_encode($respuesta);
         }
