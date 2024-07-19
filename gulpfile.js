@@ -23,6 +23,7 @@ export function css( done ) {
 
 export function js( done ) {
     src(paths.js)
+    .pipe(gulpPlumber())
       .pipe(terser())
       .pipe(dest('./public/build/js'))
     done()
