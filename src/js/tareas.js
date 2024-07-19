@@ -5,7 +5,9 @@
 
 	// Boton para mostrar el modal de agregar tarea
 	const nuevaTareaBtn = document.querySelector("#agregar-tarea");
-	nuevaTareaBtn.addEventListener("click", mostrarFormulario);
+	nuevaTareaBtn.addEventListener("click", function () {
+		mostrarFormulario();
+	});
 
 	async function obtenerTareas() {
 		try {
@@ -41,6 +43,9 @@
 
 			const nombreTarea = document.createElement("p");
 			nombreTarea.textContent = tarea.nombre;
+			nombreTarea.ondblclick = function () {
+				mostrarFormulario((editar = true), { ...tarea });
+			};
 
 			const opcionesDiv = document.createElement("div");
 			opcionesDiv.classList.add("opciones");
@@ -76,19 +81,29 @@
 		});
 	}
 
-	function mostrarFormulario() {
+	function mostrarFormulario(editar = false, tarea = {}) {
 		const modal = document.createElement("div");
 		modal.classList.add("modal");
 		modal.innerHTML = `
 		<form action="" class="formulario nueva-tarea">
-			<legend>Añade una nueva tarea</legend>
+			<legend>${editar ? "Editar Tarea" : "Añade una nueva tarea"}</legend>
 			<div class="campo">
 				<label for="">Tarea</label>
-				<input type="text" name="tarea" id="tarea" placeholder="Añadir Tarea al proyecto Actual" />
+				<input 
+				type="text" 
+				name="tarea" 
+				id="tarea" 
+				placeholder="${tarea.nombre ? "Editar Tarea" : "Añadir Tarea al proyecto Actual"}"  
+				value="${tarea.nombre ? tarea.nombre : ""}"/>
 			</div>
 			<div class="opciones">
-				<input type="submit" value="Añadir Tarea" class="submit-nueva-tarea" />
-				<button type="button" class="cerrar-modal">Regresar</button>
+				<input 
+				type="submit" 
+				value="${tarea.nombre ? "Guardar Cambios" : "Añadir Tarea"}" 
+				class="submit-nueva-tarea" />
+				<button 
+				type="button" 
+				class="cerrar-modal">Regresar</button>
 			</div>
 		</form>
 		`;
@@ -108,24 +123,27 @@
 				}, 500);
 			}
 			if (e.target.classList.contains("submit-nueva-tarea")) {
-				submitFormularioNuevaTarea();
+				const nombreTarea = document.querySelector("#tarea").value.trim();
+
+				if (nombreTarea === "") {
+					// mostrar alerta de error
+					mostrarAlerta("El nombre de la tarea es obligatorio", "error", document.querySelector(".formulario legend"));
+					return;
+				} else if (nombreTarea.length > 60) {
+					mostrarAlerta("El nombre de la tarea no puede tener mas de 60 caracteres", "error", document.querySelector(".formulario legend"));
+					return;
+				}
+
+				if (editar) {
+					tarea.nombre = nombreTarea;
+					actualizarTarea(tarea);
+				} else {
+					agregarTarea(nombreTarea);
+				}
 			}
 		});
 
 		document.querySelector(".dashboard").appendChild(modal);
-	}
-
-	function submitFormularioNuevaTarea() {
-		const tarea = document.querySelector("#tarea").value.trim();
-
-		if (tarea === "") {
-			// mostrar alerta de error
-			mostrarAlerta("El nombre de la tarea es obligatorio", "error", document.querySelector(".formulario legend"));
-		} else if (tarea.length > 60) {
-			mostrarAlerta("El nombre de la tarea no puede tener mas de 60 caracteres", "error", document.querySelector(".formulario legend"));
-		} else {
-			agregarTarea(tarea);
-		}
 	}
 
 	// Muestra un mensaje en la interfaz
@@ -163,16 +181,21 @@
 			});
 			const resultado = await respuesta.json();
 
-			mostrarAlerta(resultado.mensaje, resultado.tipo, document.querySelector(".formulario legend"));
-
 			if (resultado.tipo === "exito") {
-				const nuevaTareaBtn = document.querySelector(".submit-nueva-tarea");
 				const cerrarModalBtn = document.querySelector(".cerrar-modal");
-				nuevaTareaBtn.classList.add("ocultar");
-				setTimeout(() => {
-					cerrarModalBtn.click();
-				}, 2000);
-
+				cerrarModalBtn.click();
+				Swal.fire({
+					position: "top-end",
+					icon: "success",
+					title: resultado.mensaje,
+					showConfirmButton: false,
+					timer: 1500,
+					customClass: {
+						popup: "swal2-popup",
+						title: "swal2-title",
+						text: "swal2-text",
+					},
+				});
 				// Agregar el objeto de tarea al global de tareas
 				const tareaObj = {
 					id: String(resultado.id),
@@ -216,12 +239,28 @@
 			const resultado = await respuesta.json();
 
 			if (resultado.respuesta.tipo === "exito") {
-				mostrarAlerta(resultado.respuesta.mensaje, resultado.respuesta.tipo, document.querySelector(".contenedor-nueva-tarea"));
+				const cerrarModalBtn = document.querySelector(".cerrar-modal");
+				if (cerrarModalBtn) {
+					cerrarModalBtn.click();
+				}
+				Swal.fire({
+					position: "top-end",
+					icon: "success",
+					title: resultado.respuesta.mensaje,
+					showConfirmButton: false,
+					timer: 1500,
+					customClass: {
+						popup: "swal2-popup",
+						title: "swal2-title",
+						text: "swal2-text",
+					},
+				});
 			}
 
 			tareas = tareas.map((tareaMemoria) => {
 				if (tareaMemoria.id === id) {
 					tareaMemoria.estado = estado;
+					tareaMemoria.nombre = nombre;
 				}
 				return tareaMemoria;
 			});
@@ -271,9 +310,11 @@
 
 			if (resultado.resultado) {
 				Swal.fire({
-					title: "Accion Completada!",
-					text: resultado.mensaje,
+					position: "top-end",
 					icon: "success",
+					title: resultado.mensaje,
+					showConfirmButton: false,
+					timer: 1500,
 					customClass: {
 						popup: "swal2-popup",
 						title: "swal2-title",
