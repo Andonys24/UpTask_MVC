@@ -65,7 +65,7 @@ class LoginController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario->sincronizar($_POST);
-            $alertas = $usuario->validadNuevaCuenta();
+            $alertas = $usuario->validarNuevaCuenta();
             if (empty($alertas)) {
                 $existeUsuario = Usuario::where('email', $usuario->email);
                 if ($existeUsuario) {

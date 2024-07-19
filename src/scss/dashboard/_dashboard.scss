@@ -31,4 +31,11 @@
 			font-weight: bold;
 		}
 	}
+
+	.enlace{
+		color: v.$indigo;
+		&:hover{
+			color: darken($color: v.$indigo, $amount: 20%);
+		}
+	}
 }
