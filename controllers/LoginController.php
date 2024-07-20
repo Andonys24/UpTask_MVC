@@ -10,6 +10,7 @@ class LoginController
 {
     public static function login(Router $router)
     {
+        $usuario = new Usuario;
         $alertas = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario = new Usuario($_POST);
@@ -47,6 +48,7 @@ class LoginController
         // Renderizar la vista
         $router->render('auth/login', [
             'titulo' => 'Iniciar Sesion',
+            'usuario' => $usuario,
             'alertas' => $alertas
         ]);
     }
@@ -110,16 +112,21 @@ class LoginController
                 // Buscar el usuario
                 $usuario = Usuario::where('email', $usuario->email);
                 if ($usuario && $usuario->confirmado) {     // Encontro el usuario
-                    // Generar Token
-                    $usuario->crearToken();
-                    unset($usuario->password2);
-                    // Actualizar el usuario
-                    $usuario->guardar();
-                    // Enviar el email
-                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
-                    $email->enviarInstrucciones();
-                    // Imprimir la alerta
-                    Usuario::setAlerta('exito', 'Hemos enviado las intrucciones a tu Email.');
+                    if ($usuario->token) {
+                        // Usuario ya tiene un token
+                        Usuario::setAlerta('error', 'Ya hemos enviado previamente las instrucciones a tu Email.');
+                    } else {
+                        // Generar Token
+                        $usuario->crearToken();
+                        unset($usuario->password2);
+                        // Actualizar el usuario
+                        $usuario->guardar();
+                        // Enviar el email
+                        $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                        $email->enviarInstrucciones();
+                        // Imprimir la alerta
+                        Usuario::setAlerta('exito', 'Hemos enviado las intrucciones a tu Email.');
+                    }
                 } else {
                     Usuario::setAlerta('error', 'El usuario no existe o no esta confirmado.');
                 }

@@ -28,8 +28,8 @@ CREATE TABLE `proyectos` (
   `url` varchar(32) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `propietarioId` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `propietarioId` (`propietarioId`),
-  CONSTRAINT `proyectos_ibfk_1` FOREIGN KEY (`propietarioId`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
+  KEY `proyectos_ibfk_1` (`propietarioId`),
+  CONSTRAINT `proyectos_ibfk_1` FOREIGN KEY (`propietarioId`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -39,7 +39,7 @@ CREATE TABLE `proyectos` (
 
 LOCK TABLES `proyectos` WRITE;
 /*!40000 ALTER TABLE `proyectos` DISABLE KEYS */;
-INSERT INTO `proyectos` VALUES (1,' Tienda Virtual','ad461585d784d2b4688c31c8fb6f8cbd',2),(2,' Creacion de una API','8b5bb48f41eef38a284852a7402b12ef',2),(3,' Aprender JS Moderno','82211b47dc00ab895e73e99d67155401',2),(4,' Aprender Django y Flask','ba22fedb10490146e06d127f474b39d1',1),(5,' Aprender Django','88d5fd1393d76080e1e770ef967346b3',2),(6,' Juego de Adivinanza','0d32722655322dc055860dc6809377b9',2),(7,' Gestión de una Biblioteca Virtual','c3ace6c03119b9883df02633c9ba4dee',2),(8,' Pruebas','8692397d404e4fb38be61e357d91cf4c',2);
+INSERT INTO `proyectos` VALUES (1,' Tienda Virtual','ad461585d784d2b4688c31c8fb6f8cbd',2),(2,' Creacion de una API','8b5bb48f41eef38a284852a7402b12ef',2),(3,' Aprender JS Moderno','82211b47dc00ab895e73e99d67155401',2),(4,' Aprender Django y Flask','ba22fedb10490146e06d127f474b39d1',1),(5,' Aprender Django','88d5fd1393d76080e1e770ef967346b3',2),(6,' Juego de Adivinanza','0d32722655322dc055860dc6809377b9',2),(7,' Gestión de una Biblioteca Virtual','c3ace6c03119b9883df02633c9ba4dee',2);
 /*!40000 ALTER TABLE `proyectos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,9 +56,9 @@ CREATE TABLE `tareas` (
   `estado` tinyint(1) DEFAULT NULL,
   `proyectoId` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `proyectoId` (`proyectoId`),
-  CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`proyectoId`) REFERENCES `proyectos` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  KEY `tareas_ibfk_1` (`proyectoId`),
+  CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`proyectoId`) REFERENCES `proyectos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +67,7 @@ CREATE TABLE `tareas` (
 
 LOCK TABLES `tareas` WRITE;
 /*!40000 ALTER TABLE `tareas` DISABLE KEYS */;
-INSERT INTO `tareas` VALUES (1,'Configurar Entorno',0,3),(2,'Fundamentos de JS',0,3),(3,'Estructura de Control',0,3),(4,' Funciones',0,3),(5,' Objetos Y arrays',0,3),(6,'DOM',0,3),(7,' Asyncronia en JS',0,3),(8,'Manejo de Errores',0,3),(9,' Apis y Fetchs',0,3),(10,' Progamacion Orientada a Objetos',0,3),(11,' Modularizacion',0,3),(12,' Herramientas y Frameworks',0,3),(13,' Configuracion del Entorno',1,5),(14,' Conceptos Basicos de Django',0,5),(15,' Crear Logica del Juego (numeros aleaotrios, intentos)',1,6),(16,' Disenar una interfaz para el Usuario',1,6),(17,' Proporcionar retroalimentación al jugador (mayor/menor)',0,6),(18,' Llevar un registro de los intentos y puntajes',0,6),(19,' Proyectos Prácticos',0,3),(20,' Versionado de Código (git)',0,3),(21,' Revisar y Mejorar mi codigo',0,3),(22,' Crear una aplicacion',0,5),(23,' Aprender a usar modelos',0,5),(24,' Aprender a usar las vistas',0,5),(25,' Configurar las urls',0,5),(26,' Crear y usar templates',0,5),(27,' Crear formularios usando forms.py',0,5),(28,' Implementar registro, inicio de sesión y cierre de sesión.',0,5),(29,' Manejo de Archivos Estáticos y Multimedia',0,5),(30,' Desarrollo de APIs',0,5),(31,' Usar pytest o el framework de pruebas de Django.',0,5),(32,' Crear aplicaciones simples',0,5),(33,' Optimización y Mejores Prácticas',0,5),(34,' Crear un catálogo de productos.',1,1),(35,' Implementar un sistema de carrito de compras.',0,1),(36,' Añadir un panel de administración para gestionar productos.',0,1),(37,' Mostran fin del juego segun los resultados',0,6),(38,' Diseño del modelo de datos',0,7),(39,' Implementación de la base de datos',0,7),(40,' Desarrollo del backend',0,7),(41,' Desarrollo del frontend',0,7),(42,' Implementación de funciones adicionales',0,7),(43,' Seguridad y validaciones',0,7),(44,' Pruebas y depuración',0,7),(45,' Documentación',0,7),(46,' Implementación y despliegue',0,7),(56,' Aprender Python',1,8),(57,' Aprender JS',0,8),(58,' Aprender PostgreSQL',0,8);
+INSERT INTO `tareas` VALUES (1,'Configurar Entorno',0,3),(2,'Fundamentos de JS',0,3),(3,'Estructura de Control',0,3),(4,' Funciones',0,3),(5,' Objetos Y arrays',0,3),(6,'DOM',0,3),(7,' Asyncronia en JS',0,3),(8,'Manejo de Errores',0,3),(9,' Apis y Fetchs',0,3),(10,' Progamacion Orientada a Objetos',0,3),(11,' Modularizacion',0,3),(12,' Herramientas y Frameworks',0,3),(13,' Configuracion del Entorno',1,5),(14,' Conceptos Basicos de Django',0,5),(15,' Crear Logica del Juego (numeros aleaotrios, intentos)',1,6),(16,' Disenar una interfaz para el Usuario',1,6),(17,' Proporcionar retroalimentación al jugador (mayor/menor)',0,6),(18,' Llevar un registro de los intentos y puntajes',0,6),(19,' Proyectos Prácticos',0,3),(20,' Versionado de Código (git)',0,3),(21,' Revisar y Mejorar mi codigo',0,3),(22,' Crear una aplicacion',0,5),(23,' Aprender a usar modelos',0,5),(24,' Aprender a usar las vistas',0,5),(25,' Configurar las urls',0,5),(26,' Crear y usar templates',0,5),(27,' Crear formularios usando forms.py',0,5),(28,' Implementar registro, inicio de sesión y cierre de sesión.',0,5),(29,' Manejo de Archivos Estáticos y Multimedia',0,5),(30,' Desarrollo de APIs',0,5),(31,' Usar pytest o el framework de pruebas de Django.',0,5),(32,' Crear aplicaciones simples',0,5),(33,' Optimización y Mejores Prácticas',0,5),(34,' Crear un catálogo de productos.',1,1),(35,' Implementar un sistema de carrito de compras.',0,1),(36,' Añadir un panel de administración para gestionar productos.',0,1),(37,' Mostran fin del juego segun los resultados',0,6),(38,' Diseño del modelo de datos',0,7),(39,' Implementación de la base de datos',0,7),(40,' Desarrollo del backend',0,7),(41,' Desarrollo del frontend',0,7),(42,' Implementación de funciones adicionales',0,7),(43,' Seguridad y validaciones',0,7),(44,' Pruebas y depuración',0,7),(45,' Documentación',0,7),(46,' Implementación y despliegue',0,7);
 /*!40000 ALTER TABLE `tareas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,8 +80,8 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(60) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `email` varchar(60) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `password` varchar(60) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `token` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `confirmado` tinyint(1) DEFAULT NULL,
@@ -113,4 +113,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-19 21:37:38
+-- Dump completed on 2024-07-20  1:12:26

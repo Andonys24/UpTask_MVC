@@ -4,7 +4,6 @@ namespace Controllers;
 
 use Model\Proyecto;
 use Model\Tarea;
-use MVC\Router;
 
 class TareaController
 {

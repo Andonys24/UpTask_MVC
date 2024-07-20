@@ -69,6 +69,9 @@ class Usuario extends ActiveRecord
             case !preg_match('/^[a-zA-Z\s]+$/', $this->nombre):
                 self::$alertas['error'][] = 'El Nombre solo debe contener letras y espacios.';
                 break;
+            case strlen($this->nombre) > 100:
+                self::$alertas['error'][] = 'El nombre no puede tener mas de 100 caracteres';
+                break;
         }
         return self::$alertas;
     }
@@ -78,6 +81,9 @@ class Usuario extends ActiveRecord
         switch (true) {
             case empty($this->email):
                 self::$alertas['error'][] = 'El Email es Obligatorio.';
+                break;
+            case strlen($this->email) > 255:
+                self::$alertas['error'][] = 'El Email no puede tener más de 255 caracteres.';
                 break;
             case !filter_var($this->email, FILTER_VALIDATE_EMAIL):
                 self::$alertas['error'][] = 'El Email no es Valido.';

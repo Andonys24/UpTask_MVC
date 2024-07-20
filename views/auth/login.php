@@ -9,7 +9,7 @@
         <form action="/" class="formulario" method="post">
             <div class="campo">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Tu Email">
+                <input type="email" name="email" id="email" placeholder="Tu Email" value="<?php echo s($usuario->email) ?>">
             </div>
             <div class="campo">
                 <label for="password">Password</label>

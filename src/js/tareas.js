@@ -175,6 +175,13 @@
 				} else if (nombreTarea.length > 60) {
 					mostrarAlerta("El nombre de la tarea no puede tener mas de 60 caracteres", "error", document.querySelector(".formulario legend"));
 					return;
+				} else if (!nombreTarea.match(/^[a-zA-Z0-9\s\-_]+$/)) {
+					mostrarAlerta(
+						"El nombre de la tarea solo puede contener letras, números, espacios, guiones y guiones bajos",
+						"error",
+						document.querySelector(".formulario legend")
+					);
+					return;
 				}
 
 				if (editar) {

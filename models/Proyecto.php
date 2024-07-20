@@ -25,6 +25,9 @@ class Proyecto extends ActiveRecord
             case empty($this->proyecto):
                 self::$alertas['error'][] = 'El nombre del proyecto es Obligatorio';
                 break;
+            case !preg_match('/^[a-zA-Z0-9\s\-_]+$/', $this->proyecto):
+                self::$alertas['error'][] = 'El nombre del proyecto solo puede contener letras, números, espacios, guiones y guiones bajos.';
+                break;
             case strlen($this->proyecto) > 60:
                 self::$alertas['error'][] = 'El nombre del proyecto no puede tener mas de 60 caracteres';
                 break;
