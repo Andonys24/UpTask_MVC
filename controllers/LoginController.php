@@ -151,7 +151,7 @@ class LoginController
             // Anadir nuevo password
             $usuario->sincronizar($_POST);
             // Validar nuevo password
-            $alertas = $usuario->validarPassword();
+            $alertas = $usuario->validarPassword($usuario->password);
 
             if (empty($alertas)) {
                 // Hashear nuevo password

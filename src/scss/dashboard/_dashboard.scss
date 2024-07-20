@@ -12,6 +12,20 @@
 	.principal {
 		flex: 1;
 		overflow: scroll;
+		@include m.tablet {
+			// Ocultar barra inferior
+			overflow-x: hidden;
+
+			// Estilos a la barra lateal
+			&::-webkit-scrollbar {
+				width: 0.9rem;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background-color: v.$indigo;
+				border-radius: 5px;
+			}
+		}
 	}
 	.contenido {
 		padding: 2.2rem;
