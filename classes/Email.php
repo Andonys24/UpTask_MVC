@@ -19,21 +19,22 @@ class Email
 
     public function enviarConfirmacion()
     {
-        // Configuracion MailTrap
+        // Configuracion Gmail
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
         $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->SMTPSecure = $_ENV['EMAIL_SECURE'];
         $mail->Username = $_ENV['EMAIL_USER'];
         $mail->Password = $_ENV['EMAIL_PASS'];
 
-        // Configuracion personaliada
-        $mail->setFrom('cuentas@uptask.com');
-        $mail->addAddress('cuentas@uptask.com', 'uptask.com');
+        // Configuracion personalizada
+        $mail->setFrom('cuentas@uptask.com', 'UpTask');
+        $mail->addAddress($this->email, $this->nombre); 
         $mail->Subject = 'Confirma tu cuenta';
 
-        $mail->isHTML(TRUE);
+        $mail->isHTML(true);
         $mail->CharSet = 'UTF-8';
 
         // Cuerpo del Email
@@ -57,17 +58,19 @@ class Email
     public function enviarInstrucciones()
     {
 
-        // Configuracion MailTrap
+        // Configuracion Gmail
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
         $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->SMTPSecure = $_ENV['EMAIL_SECURE'];
         $mail->Username = $_ENV['EMAIL_USER'];
         $mail->Password = $_ENV['EMAIL_PASS'];
 
-        $mail->setFrom('cuentas@uptask.com');
-        $mail->addAddress('cuentas@uptask.com', 'uptask.com');
+        // Configuracion personalizada
+        $mail->setFrom('recuperacion@uptask.com', 'UpTask');
+        $mail->addAddress($this->email, $this->nombre); 
         $mail->Subject = 'Reestablece tu Password';
 
         $mail->isHTML(TRUE);
