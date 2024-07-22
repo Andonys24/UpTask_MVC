@@ -19,32 +19,6 @@ class DashboardController
         ]);
     }
 
-    public static function crear_proyecto(Router $router)
-    {
-        session_start();
-        isAuth();
-        $alertas = [];
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $proyecto = new Proyecto($_POST);
-            // validacion
-            $alertas = $proyecto->validarProyecto();
-
-            if (empty($alertas)) {
-                // Generar URL unico
-                $proyecto->url = md5(uniqid());
-                // Almacenar creador del proyecto
-                $proyecto->propietarioId = $_SESSION['id'];
-                // guardar el proyecto
-                $proyecto->guardar();
-                // Redireccionar
-                header('Location: /proyecto?id=' . $proyecto->url);
-            }
-        }
-        $router->render('dashboard/crear-proyecto', [
-            'titulo' => 'Crear Proyecto',
-            'alertas' => $alertas
-        ]);
-    }
 
     public static function proyecto(Router $router)
     {
@@ -60,6 +34,18 @@ class DashboardController
         $router->render('dashboard/proyecto', [
             'titulo' => $proyecto->proyecto
         ]);
+    }
+
+    public static function gestionar_proyecto(Router $router)
+    {
+        session_start();
+        isAuth();
+        $proyecto = new Proyecto($_POST);
+
+        $router->render('dashboard/gestionar-proyectos', [
+            'titulo' => 'Gestiona Tus Proyectos'
+        ]);
+
     }
 
     public static function perfil(Router $router)
@@ -131,7 +117,6 @@ class DashboardController
                     if ($resultado) {
                         Usuario::setAlerta('exito', 'Contrasena Actualizada correctamente.');
                     }
-
                 } else {
                     Usuario::setAlerta('error', 'Password Incorrecto');
                 }

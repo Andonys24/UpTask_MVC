@@ -87,7 +87,7 @@
 			btnEliminarTarea.classList.add("eliminar-tareas");
 			btnEliminarTarea.dataset.idTarea = tarea.id;
 			btnEliminarTarea.textContent = "Eliminar";
-			btnEliminarTarea.ondblclick = function () {
+			btnEliminarTarea.onclick = function () {
 				confirmarEliminarTarea(tarea);
 			};
 
@@ -268,7 +268,7 @@
 	}
 
 	async function actualizarTarea(tarea) {
-		const { estado, id, nombre, proyectoId } = tarea;
+		const { estado, id, nombre } = tarea;
 		const datos = new FormData();
 		datos.append("id", id);
 		datos.append("nombre", nombre);
@@ -322,7 +322,7 @@
 
 	function confirmarEliminarTarea(tarea) {
 		Swal.fire({
-			title: "¿Eliminar Tarea?",
+			title: "¿Eliminar Esta Tarea?",
 			text: "¡No podrás revertir esto!",
 			icon: "warning",
 			showCancelButton: true,

@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/app.php';
 
 use Controllers\DashboardController;
 use Controllers\LoginController;
+use Controllers\ProyectoController;
 use Controllers\TareaController;
 use MVC\Router;
 
@@ -32,11 +33,19 @@ $router->get('/confirmar', [LoginController::class, 'confirmar']);
 
 // Zona de proyectos
 $router->get('/dashboard', [DashboardController::class, 'index']);
-$router->get('/crear-proyecto', [DashboardController::class, 'crear_proyecto']);
-$router->post('/crear-proyecto', [DashboardController::class, 'crear_proyecto']);
+$router->get('/gestionar-proyectos', [DashboardController::class, 'gestionar_proyecto']);
 $router->get('/proyecto', [DashboardController::class, 'proyecto']);
+
+// Api para los proyectos
+$router->get('/api/proyectos', [ProyectoController::class, 'index']);
+$router->post('/api/proyecto', [ProyectoController::class, 'crear']);
+$router->post('/api/proyecto/actualizar', [ProyectoController::class, 'actualizar']);
+$router->post('/api/proyecto/eliminar', [ProyectoController::class, 'eliminar']);
+
+// Zona de edicion de perfil
 $router->get('/perfil', [DashboardController::class, 'perfil']);
 $router->post('/perfil', [DashboardController::class, 'perfil']);
+
 $router->get('/cambiar-password', [DashboardController::class, 'cambiar_password']);
 $router->post('/cambiar-password', [DashboardController::class, 'cambiar_password']);
 

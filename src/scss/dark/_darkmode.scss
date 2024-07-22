@@ -27,7 +27,8 @@
 
 	.descripcion-pagina,
 	.nombre-pagina,
-	.listado-tareas .no-tareas {
+	.listado-tareas .no-tareas,
+	.listado-proyectos-api .no-proyectos {
 		color: darken($color: v.$grisClaro, $amount: 15%);
 	}
 
@@ -109,7 +110,8 @@
 		}
 	}
 
-	.listado-tareas .tarea {
+	.listado-tareas .tarea,
+	.proyecto-api {
 		background-color: lighten($color: $grisOscuro, $amount: 10%);
 		border-radius: 0.5rem;
 		border: none;

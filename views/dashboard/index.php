@@ -3,7 +3,7 @@
 <?php if (count($proyectos) === 0) { ?>
     <p class="no-proyectos">
         No hay Proyectos Aun
-        <a href="/crear-proyecto">Comienza Creando Uno</a>
+        <a href="/gestionar-proyectos">Comienza Creando Uno</a>
     </p>
 <?php } else { ?>
     <ul class="listado-proyectos">
