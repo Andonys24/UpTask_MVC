@@ -1,6 +1,11 @@
 <?php
 
-$db = mysqli_connect($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
+$db = mysqli_connect(
+    getenv('MYSQL_HOST') ?: 'mysql_db', 
+    getenv('MYSQL_USER'), 
+    getenv('MYSQL_PASSWORD'), 
+    getenv('MYSQL_DATABASE')
+);
 
 $db->set_charset('utf8');
 

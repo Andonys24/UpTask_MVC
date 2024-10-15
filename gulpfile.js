@@ -30,8 +30,8 @@ export function js( done ) {
 }
 
 export function dev() {
-    watch( paths.scss, css );
-    watch( paths.js, js );
+    watch( paths.scss,{usePolling: true, interval: 3000},css );
+    watch( paths.js,{usePolling: true, interval: 3000}, js );
 }
 
 export default series( js, css, dev )

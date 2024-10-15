@@ -155,8 +155,10 @@ class LoginController
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($usuario) {
             // Anadir nuevo password
             $usuario->sincronizar($_POST);
+
             // Validar nuevo password
             $alertas = $usuario->validarPassword($usuario->password);
 
@@ -171,7 +173,10 @@ class LoginController
                 // Redireccionar
                 header('Location: /');
             }
+        } else {
+            Usuario::setAlerta('error', 'Usuario no encontrado.');
         }
+    }
 
         $alertas = Usuario::getAlertas();
         $router->render('auth/restablecer', [

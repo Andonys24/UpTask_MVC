@@ -1,0 +1,56 @@
+networks:
+  php_network:
+    name: php_network
+    driver: bridge
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php_web
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/var/www/html
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    networks:
+      - php_network
+    command: php -S 0.0.0.0:3000 -t public
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/uptask_mvc.sql:/docker-entrypoint-initdb.d/uptask_mvc.sql
+    networks:
+      - php_network
+
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: gulp_container
+    command: npm run dev
+    volumes:
+      - ./src:/usr/app/src
+      - ./public/build:/usr/app/public/build
+      - ./gulpfile.js:/usr/app/gulpfile.js
+    depends_on:
+      - php
+    networks:
+      - php_network
+
+volumes:
+  mysql_data:

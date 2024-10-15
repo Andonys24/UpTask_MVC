@@ -40,7 +40,7 @@ class DashboardController
     {
         session_start();
         isAuth();
-        $proyecto = new Proyecto($_POST);
+        // $proyecto = new Proyecto($_POST);
 
         $router->render('dashboard/gestionar-proyectos', [
             'titulo' => 'Gestiona Tus Proyectos'
